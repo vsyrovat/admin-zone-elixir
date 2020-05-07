@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source ${SCRIPT_DIR}/vars
+
+docker-compose -f ${SCRIPT_DIR}/docker-compose.yml -p ${PROJECT_NAME} down --remove-orphans $@

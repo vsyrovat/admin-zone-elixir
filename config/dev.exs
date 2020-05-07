@@ -4,8 +4,9 @@ use Mix.Config
 config :app, App.Repo,
   username: "postgres",
   password: "postgres",
-  database: "app_dev",
-  hostname: "localhost",
+  database: "admin_zone_1_dev",
+  hostname: System.get_env("PG_HOST") || "localhost",
+  port: String.to_integer(System.get_env("PG_PORT") || "5432"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

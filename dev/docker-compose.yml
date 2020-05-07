@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:12.2-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ${PGDATA_DIR}:/var/lib/postgresql/data/pgdata
+      - /etc/passwd:/etc/passwd:ro
+    ports:
+      - '${PG_PORT}:5432'
+    restart: 'no'
+    user: '${UID}:${GID}'

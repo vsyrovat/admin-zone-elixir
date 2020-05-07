@@ -8,8 +8,9 @@ use Mix.Config
 config :app, App.Repo,
   username: "postgres",
   password: "postgres",
-  database: "app_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  database: "admin_zone_1_test#{System.get_env("MIX_TEST_PARTITION")}",
+  hostname: System.get_env("PG_HOST") || "localhost",
+  port: String.to_integer(System.get_env("PG_PORT") || "5432"),
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
