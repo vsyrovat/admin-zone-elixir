@@ -1,13 +1,17 @@
 defmodule AppWeb.Auth.ErrorHandler do
+  import Phoenix.Controller
   import Plug.Conn
 
   @behaviour Guardian.Plug.ErrorHandler
 
   @impl Guardian.Plug.ErrorHandler
-  def auth_error(conn, {:unauthorized, _reason}, _opts) do
+  def auth_error(conn, {:unauthenticated, _reason}, _opts) do
     conn
-    |> Phoenix.Controller.put_flash(:error, "You must be logged in to access this page")
-    |> Phoenix.Controller.redirect(to: AppWeb.Router.Helpers.session_path(conn, :new))
+    |> put_flash(:error, "You must be logged in to access this page")
+    |> put_status(:forbidden)
+    |> put_view(AppWeb.ErrorView)
+    |> render("403.html")
+    |> halt()
   end
 
   @impl Guardian.Plug.ErrorHandler

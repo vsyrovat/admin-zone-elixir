@@ -19,6 +19,14 @@ defmodule AppWeb.Router do
     plug AppWeb.Auth.CurrentUser
   end
 
+  pipeline :login_required do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+  pipeline :admin_required do
+    plug AppWeb.Auth.CheckAdmin
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -30,6 +38,12 @@ defmodule AppWeb.Router do
     resources "/users", UserController, only: [:index]
     resources "/login", SessionController, only: [:new, :create]
     post "/logout", SessionController, :delete
+
+    scope "/admin", Admin, as: :admin do
+      pipe_through [:login_required, :admin_required]
+
+      get "/", PageController, :index
+    end
   end
 
   # Other scopes may use custom stacks.

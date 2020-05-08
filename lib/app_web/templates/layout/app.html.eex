@@ -21,7 +21,7 @@
             <% else %>
               <li><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% end %>
-
+            <li><%= link "Admin", to: Routes.admin_page_path(@conn, :index) %></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
