@@ -2,6 +2,10 @@ defmodule App.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  defmodule Guest do
+    defstruct name: nil
+  end
+
   schema "users" do
     field :email, :string
     field :is_admin, :boolean, default: false
@@ -42,4 +46,20 @@ defmodule App.Auth.User do
 
   defdelegate checkpwd(pass, hash), to: Bcrypt, as: :verify_pass
   defdelegate dummy_checkpwd(), to: Bcrypt, as: :no_user_verify
+end
+
+defimpl String.Chars, for: App.Auth.User do
+  def to_string(user), do: user.email
+end
+
+defimpl Phoenix.HTML.Safe, for: App.Auth.User do
+  def to_iodata(user), do: to_string(user)
+end
+
+defimpl String.Chars, for: App.Auth.User.Guest do
+  def to_string(_), do: "Guest"
+end
+
+defimpl Phoenix.HTML.Safe, for: App.Auth.User.Guest do
+  def to_iodata(guest), do: to_string(guest)
 end

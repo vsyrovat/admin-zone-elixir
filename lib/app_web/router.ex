@@ -9,15 +9,27 @@ defmodule AppWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :with_session do
+    plug Guardian.Plug.Pipeline,
+      module: App.Guardian,
+      error_handler: AppWeb.Auth.ErrorHandler
+
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug AppWeb.Auth.CurrentUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", AppWeb do
-    pipe_through :browser
+    pipe_through [:browser, :with_session]
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index]
+    resources "/login", SessionController, only: [:new, :create]
+    post "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.

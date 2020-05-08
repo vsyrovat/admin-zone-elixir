@@ -39,3 +39,5 @@ config :app, AppWeb.Endpoint,
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
+
+config :app, App.Guardian, secret_key: secret_key_base
