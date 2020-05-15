@@ -30,14 +30,14 @@ config :app, AppWeb.Endpoint,
   ],
   secret_key_base: secret_key_base
 
+config :app, App.Guardian, secret_key: secret_key_base
+
 # ## Using releases (Elixir v1.9+)
 #
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-#     config :app, AppWeb.Endpoint, server: true
+config :app, AppWeb.Endpoint, server: true
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
-
-config :app, App.Guardian, secret_key: secret_key_base
