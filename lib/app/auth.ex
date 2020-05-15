@@ -105,4 +105,13 @@ defmodule App.Auth do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def find_admins do
+    query =
+      from u in User,
+        where: u.is_admin == true,
+        select: u
+
+    Repo.all(query)
+  end
 end

@@ -24,11 +24,16 @@ defmodule App.Auth.User do
     user
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
+    |> cast_password(attrs)
   end
 
   def create_changeset(attrs) do
     %__MODULE__{}
     |> changeset(attrs)
+  end
+
+  defp cast_password(changeset, attrs) do
+    changeset
     |> cast(attrs, [:password], [])
     |> validate_length(:password, min: 6, max: 100)
     |> hash_password()
