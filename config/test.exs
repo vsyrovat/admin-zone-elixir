@@ -23,3 +23,5 @@ config :app, AppWeb.Endpoint,
 config :logger, level: :warn
 
 config :app, App.Guardian, secret_key: "TestSecretKey"
+
+config :app, App.Mailer, adapter: Bamboo.TestAdapter

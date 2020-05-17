@@ -114,4 +114,26 @@ defmodule App.Auth do
 
     Repo.all(query)
   end
+
+  @spec find_user_by_email(String.t()) :: User.t() | nil
+  def find_user_by_email(email) do
+    query =
+      from u in User,
+        where: u.email == ^email,
+        select: u
+
+    Repo.one(query)
+  end
+
+  def email_password_recovery(conn, %User{} = user) do
+    key = random_string(32)
+    {:ok, user} = update_user(user, %{password_recovery_key: key})
+
+    App.Email.password_recovery_email(conn, user)
+    |> App.Mailer.deliver_later()
+  end
+
+  def random_string(len) do
+    :crypto.strong_rand_bytes(len) |> Base.url_encode64() |> binary_part(0, len)
+  end
 end

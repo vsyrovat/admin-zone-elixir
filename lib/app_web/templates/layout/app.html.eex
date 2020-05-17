@@ -22,8 +22,13 @@
               <li><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% end %>
             <li><%= link "Admin", to: Routes.admin_page_path(@conn, :index) %></li>
+            <li><%= link "Send test email", to: Routes.email_path(@conn, :send), method: :post %></li>
+
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), target: :_blank %></li>
+            <% end %>
+            <%= if Mix.env() == :dev do %>
+              <li><%= link "View sent emails", to: "/sent_emails", target: :_blank %></li>
             <% end %>
           </ul>
         </nav>
@@ -37,7 +42,7 @@
     <footer>
       <section class="container">
         <hr>
-        <p>Current user: <%= if @conn.assigns.current_user, do: @conn.assigns.current_user.email, else: "Guest" %></p>
+        <p>Current user: <strong><%= if @conn.assigns.current_user, do: @conn.assigns.current_user.email, else: "Guest" %></strong></p>
       </section>
     </footer>
   </body>

@@ -9,3 +9,4 @@
   </div>
   <%= submit "Login", class: "btn btn-primary" %>
 <% end %>
+<%= link "Forget password?", to: Routes.restore_password_path(@conn, :index) %>

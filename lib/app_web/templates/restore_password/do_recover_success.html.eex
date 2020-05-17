@@ -1,0 +1,5 @@
+<h1>Password changed successfully!</h1>
+
+<div>
+  <%= link "Go to login page", to: Routes.session_path(@conn, :new) %>
+</div>

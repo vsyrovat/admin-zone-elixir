@@ -46,7 +46,9 @@ defmodule App.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.2"},
-      {:guardian, "~> 2.1"}
+      {:guardian, "~> 2.1"},
+      {:bamboo, "~> 1.5"},
+      {:bamboo_smtp, "~> 2.1.0"}
     ]
   end
 

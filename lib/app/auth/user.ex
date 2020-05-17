@@ -2,22 +2,19 @@ defmodule App.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  defmodule Guest do
-    defstruct name: nil
-  end
-
   schema "users" do
     field :email, :string
     field :is_admin, :boolean, default: false
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :password_recovery_key, :string
 
     timestamps()
   end
 
   @required ~w(email)a
-  @optional ~w(name is_admin)a
+  @optional ~w(name is_admin password_recovery_key)a
 
   @doc false
   def changeset(user, attrs) do

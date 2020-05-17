@@ -1,5 +1,7 @@
 defmodule App.AuthTest do
-  use App.DataCase, async: true
+  # use App.DataCase, async: true
+  use AppWeb.ConnCase, async: true
+  use Bamboo.Test
   alias App.Auth
   alias App.Auth.User
 
@@ -75,6 +77,13 @@ defmodule App.AuthTest do
     test "change_user/1 returns a user changeset" do
       user = user_fixture()
       assert %Ecto.Changeset{} = Auth.change_user(user)
+    end
+
+    test "delivery mail delivers mail" do
+      user = user_fixture()
+      conn = get(build_conn(), "/")
+      expected_email = App.Auth.email_password_recovery(conn, user)
+      assert_delivered_email(expected_email)
     end
   end
 end

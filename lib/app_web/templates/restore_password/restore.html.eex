@@ -1,0 +1,17 @@
+<h1>Password recovery</h1>
+
+<%= if @user.password_recovery_key == @key do %>
+  <%= form_for @conn, Routes.restore_password_path(@conn, :do_recover), [as: :form], fn f -> %>
+    <div class="form-group">
+      <%= password_input f, :new_password, placeholder: "New password", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= password_input f, :new_password_repeat, placeholder: "Repeat password", class: "form-control" %>
+    </div>
+    <%= hidden_input f, :user_id, value: @user.id %>
+    <%= hidden_input f, :key, value: @key %>
+    <%= submit "Set new password", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <p>Sorry, recovery key no longer active. Ask for another one.</p>
+<% end %>

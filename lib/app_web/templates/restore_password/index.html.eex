@@ -1,0 +1,10 @@
+<h1>Restore password</h1>
+
+<p>Here you can request restore password to email</p>
+
+<%= form_for @conn, Routes.restore_password_path(@conn, :create), [as: :restore_password_request], fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+  </div>
+  <%= submit "Restore password to email", class: "btn btn-primary" %>
+<% end %>

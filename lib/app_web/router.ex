@@ -38,6 +38,10 @@ defmodule AppWeb.Router do
     resources "/users", UserController, only: [:index]
     resources "/login", SessionController, only: [:new, :create]
     post "/logout", SessionController, :delete
+    resources "/restore-password", RestorePasswordController, only: [:index, :create]
+    get "/restore-password-restore", RestorePasswordController, :restore
+    post "/restore-password-restore", RestorePasswordController, :do_recover
+    post "/send-email", EmailController, :send
 
     scope "/admin", Admin, as: :admin do
       pipe_through [:login_required, :admin_required]
@@ -65,5 +69,7 @@ defmodule AppWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: AppWeb.Telemetry
     end
+
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 end
